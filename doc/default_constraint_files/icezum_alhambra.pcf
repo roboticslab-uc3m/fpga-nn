@@ -1,0 +1,79 @@
+# Default Constraint file for iceZUM Alhambra board
+
+# Leds
+#set_io LED0 95
+#set_io LED1 96
+#set_io LED2 97
+#set_io LED3 98
+#set_io LED4 99
+#set_io LED5 101
+#set_io LED6 102
+#set_io LED7 104
+
+# Buttons
+#set_io SW1 10
+#set_io SW2 11
+
+# I2C
+#set_io SCL 87
+#set_io SDA 88
+
+# ADC I2C interface
+#set_io ADC_SCL 91
+#set_io ADC_SDA 90
+
+# FTDI SPI interface
+#set_io FTDI_SCK 70
+#set_io FTDI_SDI 68
+#set_io FTDI_SDO 67
+#set_io FTDI_SS  71
+#set_io FTDI_DONE 65
+#set_io FTDI_REST 66
+
+# FTDI UART interface
+#set_io FTDI_RX 9
+#set_io FTDI_TX 8
+#set_io FTDI_RTS 7
+#set_io FTDI_CTS 4
+#set_io FTDI_DTR 3
+#set_io FTDI_DSR 2
+#set_io FTDI_DCD 1
+
+
+# System clock
+#set_io CLK12MHZ 21
+
+# IO
+#set_io IO0 119
+#set_io IO1 118
+#set_io IO2 117
+#set_io IO3 116
+#set_io IO4 115
+#set_io IO5 114
+#set_io IO6 113
+#set_io IO7 112
+#set_io IO8 138
+#set_io IO9 139
+#set_io IO10 141
+#set_io IO11 142
+#set_io IO12 143
+#set_io IO13 144
+
+
+# DIO
+#set_io D0 78
+#set_io D1 79
+#set_io D2 80
+#set_io D3 81
+#set_io D4 88
+#set_io D5 87
+
+# Direct GPIO
+#set_io GPIO2_24 37
+#set_io GPIO2_26 39
+#set_io GPIO2_28 42
+#set_io GPIO2_35 49
+#set_io GPIO2_25 38
+#set_io GPIO2_27 41
+#set_io GPIO2_29 43
+#set_io GPIO2_36 50
