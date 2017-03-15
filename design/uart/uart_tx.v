@@ -10,19 +10,22 @@ module uart_tx (
     input wire clk,
     input wire start,
     input wire [7:0] data_in,   
-    output wire tx,
-    output wire busy
+    output reg tx,
+    output reg busy
 );
 
-typedef enum reg {IDLE_ST, SEND_START_ST, SEND_BIT_ST} state_t;
+localparam integer 
+    IDLE_ST = 2'd0,
+    SEND_START_ST = 2'd1,
+    SEND_BIT_ST = 2'd2; 
 
-state_t state, next_state;
+reg [1:0] state, next_state;
 
 reg [7:0] data_reg;
 reg [2:0] cnt_value;
-wire [2:0] cnt_initial;
-wire cnt_ld, cnt_en;
-wire data_ld;
+reg [2:0] cnt_initial;
+reg cnt_ld, cnt_en;
+reg data_ld;
 
 // next state
 always @(posedge clk, negedge rst_n) begin
@@ -30,7 +33,7 @@ always @(posedge clk, negedge rst_n) begin
         state <= IDLE_ST;
         data_reg <= 0;
     end else begin
-        state <= next_state:
+        state <= next_state;
         if (data_ld) begin
             data_reg <= data_in;
         end
@@ -45,7 +48,7 @@ always @(posedge clk, negedge rst_n) begin
     end else if (cnt_ld) begin
         cnt_value <= cnt_initial;
     end else if (cnt_en) begin
-        cnt_value <= data_cnt + 1;
+        cnt_value <= cnt_value + 1;
     end
 end
 
@@ -61,8 +64,8 @@ always @(*) begin
         SEND_START_ST:
             next_state <= SEND_BIT_ST;
         SEND_BIT_ST:
-            if (bit_cnt == 8) begin
-                next_state <= IDLE;
+            if (cnt_value == 8) begin
+                next_state <= IDLE_ST;
             end
     endcase 
 end
@@ -70,29 +73,34 @@ end
 
 // output logic
 always @(*) begin
-    tx <= 1;
-    busy <= 0;
+    tx = 1;
+    busy = 0;
     data_ld = 0;
-    cnt_initial <= 3'd1;
-    cnt_ld <= 0;
-    cnt_en <= 0;
+    cnt_initial = 3'd1;
+    cnt_ld = 0;
+    cnt_en = 0;
     case (state)
-        IDLE_ST:
-            tx <= 1;
-            busy <= 1;
+        IDLE_ST: 
+        begin
+            tx = 1;
+            busy = 1;
             if (start) begin
                 data_ld = 1;
             end
+        end
         SEND_START_ST:
-            tx <= 0;
-            busy <= 1;
-            cnt_ld <= 1;
+        begin
+            tx = 0;
+            busy = 1;
+            cnt_ld = 1;
+        end
         SEND_BIT_ST:
-            tx <= data_empty[data_cnt];
-            busy <= 1;
-            cnt_en <= 1;
+        begin
+            tx = data_reg[cnt_value];
+            busy = 1;
+            cnt_en = 1;
+        end
     endcase 
 end
 
-
-endmodule;
+endmodule
