@@ -19,7 +19,7 @@ compile: $(COMPILED_FILES)
 
 $(TB_COMPILE_DIR)/%.comp: %.v
 	@echo "	COMPILE $<"
-	iverilog $< $(PROJECTS_PATHS) -o $@
+	@iverilog $< $(PROJECTS_PATHS) -o $@
 
 clean_files:
 	@rm -rf $(REPORT_DIR)/*.txt
