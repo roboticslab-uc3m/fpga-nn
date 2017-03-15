@@ -27,24 +27,26 @@ always #10 clk = !clk;
 initial begin
 	$monitor("Time %d", $time);
 	clk = 0;
-    rst_n = 1;
-	repeat (5) @(posedge clk);
-	rst_n = 0;
+    rst_n = 0;
+	repeat (5) @(negedge clk);
+	rst_n = 1;
 end
 
 // testbench
 initial begin
 	start <= 0;
 	data <= 8'h00;
-
-	wait( !rst_n );
-	@(posedge clk);
+	wait( rst_n );
+	@(negedge clk);
 	$monitor("[Time %d]: Started testbench", $time);
 
-	data <= 8'h1A;
+	data <= 8'b10101010;
 	start <= 1;
+	
+	repeat (10) @(negedge clk);
+	start <= 0;
 
-	repeat (20) @(posedge clk);
+	repeat (100) @(negedge clk);
 	$finish;
 end
 

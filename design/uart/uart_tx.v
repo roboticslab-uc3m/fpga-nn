@@ -64,7 +64,7 @@ always @(*) begin
         SEND_START_ST:
             next_state <= SEND_BIT_ST;
         SEND_BIT_ST:
-            if (cnt_value == 8) begin
+            if (cnt_value == 7) begin
                 next_state <= IDLE_ST;
             end
     endcase 
@@ -76,7 +76,7 @@ always @(*) begin
     tx = 1;
     busy = 0;
     data_ld = 0;
-    cnt_initial = 3'd1;
+    cnt_initial = 3'd000;
     cnt_ld = 0;
     cnt_en = 0;
     case (state)
