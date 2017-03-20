@@ -5,7 +5,7 @@ Neural Networks on FPGA
 This project aims to develop and evaluate neural networks for FPGAs. The designs are written in the verilog-2005 HDL lenguaje.
 
 ### Open FPGA development
-Given the recently releasing of the open source Icestorm tools, which allows to program several [Lattice's ICE FPGAs](https://en.wikipedia.org/wiki/ICE_(FPGA)), we chose to work only with open tools. The sources from this projects are also open source, licensed under the [LGPL License](https://www.gnu.org/licenses/lgpl.html).
+Given the recent release of the open source Icestorm tools, which allows to program several [Lattice's ICE FPGAs](https://en.wikipedia.org/wiki/ICE_(FPGA)), we chose to work only with open tools. The sources from this projects are also open source, licensed under the [LGPL License](https://www.gnu.org/licenses/lgpl.html).
 
 ### FPGA compatibility
 The choosen toolchain is compatible with the iCE40 LP1K, LP4K, LP8K, and HX devices. However, some of the tools are compatible with more FPGAs, as is the case of Yosys, which can syntesize code for the Xilinx-7 series; and the verilog code is constrainted to the [verilog-2005 standard](http://staff.ustc.edu.cn/~songch/download/IEEE.1364-2005.pdf), so it should be easily ported to most platforms and toolchains.
