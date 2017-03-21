@@ -1,3 +1,13 @@
+//==============================================================================
+// Testbench name 	 : uart_tx_tb
+// File name   : uart_tx.v
+// Function	   : Test for the UART transmit module
+// Engineer    : Dennis Pinto Rivero danielpintoriv@gmail.com
+//
+// Notes:
+//==============================================================================
+
+
 `timescale 1ns/1ps
 
 module uart_tx_tb;

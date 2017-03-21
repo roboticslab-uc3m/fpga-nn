@@ -1,3 +1,12 @@
+//==============================================================================
+// Testbench name 	 : uart_rx_tb
+// File name   : uart_rx.v
+// Function	   : Test for the UART receive module
+// Engineer    : Dennis Pinto Rivero danielpintoriv@gmail.com
+//
+// Notes:
+//==============================================================================
+
 `timescale 1ns/1ps
 
 module uart_rx_tb;
