@@ -1,6 +1,6 @@
 # Source files and projects must be specified here
-SOURCES:=uart_tb.v uart_tx_tb.v uart_rx_tb.v
-PROJECTS:=uart perceptron
+SOURCES:=uart_echo_tb.v uart_tb.v uart_tx_tb.v uart_rx_tb.v
+PROJECTS:=uart_echo uart perceptron
 
 ROOT_DIR:=..
 SIM_DIR:=$(ROOT_DIR)/$(SIMULATION_DIR)
