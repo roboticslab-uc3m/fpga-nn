@@ -1,5 +1,5 @@
-SOURCES:=uart_tx.v uart_rx.v
-TOP_FILE:=uart_tx.v
+SOURCES:=uart.v uart_tx.v uart_rx.v
+TOP_FILE:=uart.v
 TOP_MODULE:=$(patsubst %.v,%,$(TOP_FILE))
 
 ROOT_DIR:=../..
