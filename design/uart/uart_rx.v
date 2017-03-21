@@ -202,7 +202,7 @@ always @(*) begin
             busy = 0;
         end
         INIT_SYNC_START_st: begin
-            sync_cnt_val = 4*clock_cycles_per_pulse; // 1(INIT_SYNC) + 3 = 4 cycles
+            sync_cnt_val = clock_cycles_per_pulse/2; // 1(INIT_SYNC) + 3 = 4 cycles
             sync_cnt_ld = 1;
             bit_cnt_ld = 1;
         end
@@ -210,7 +210,7 @@ always @(*) begin
             sync_cnt_en = 1;
         end
         INIT_SYNC_st: begin
-            sync_cnt_val = 8*clock_cycles_per_pulse;  // 6 + 1(FETCH) + 1(INIT_SYNC) = 8 cycles
+            sync_cnt_val = clock_cycles_per_pulse;  // 6 + 1(FETCH) + 1(INIT_SYNC) = 8 cycles
             sync_cnt_ld = 1;
         end
         WAIT_SYNC_st: begin

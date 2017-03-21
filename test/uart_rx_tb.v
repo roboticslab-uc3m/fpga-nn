@@ -7,6 +7,11 @@ reg rx, clear;
 wire [7:0] data;
 wire busy, error, new_value;
 
+localparam clock_frequency = 12000000;
+localparam clk_pulse_width = 1000000000/clock_frequency;
+
+localparam baud_rate = 9600;
+
 uart_rx uart_rx(
 	.rst_n(rst_n),
 	.clk(clk),
@@ -24,7 +29,7 @@ initial begin
 end
 
 // Clock
-always #41.667 clk = !clk;
+always #(clk_pulse_width/2) clk = !clk;
 
 // Reset
 initial begin
@@ -45,30 +50,30 @@ initial begin
 
     // send START signal
 	rx = 0;
-	repeat (8*(12000000/9600)) @(negedge clk);
+	repeat (clock_frequency/baud_rate) @(negedge clk);
 
     // send 8 bits
     rx = 1;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 0;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 1;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 0;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 1;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 0;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 1;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     rx = 0;
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
 
     // send STOP signal
     rx = 1;
     
-    repeat (8*(12000000/9600)) @(negedge clk);
+    repeat (clock_frequency/baud_rate) @(negedge clk);
     
 	$finish;
 end
