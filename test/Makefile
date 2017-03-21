@@ -1,5 +1,5 @@
 # Source files and projects must be specified here
-SOURCES:=uart_tx_tb.v
+SOURCES:=uart_tx_tb.v uart_rx_tb.v
 PROJECTS:=uart perceptron
 
 ROOT_DIR:=..
