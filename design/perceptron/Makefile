@@ -1,4 +1,6 @@
-SOURCES:=perceptron.v
+PROJECT_NAME:=perceptron
+
+SOURCES:=perceptron_top.v perceptron.v
 TOP_FILE:=perceptron_iceZUM_alhambra.v
 TOP_MODULE:=$(patsubst %.v,%,$(TOP_FILE))
 
@@ -13,7 +15,7 @@ ICE40_SYNTH_REPORT:=synthesis_ice40.txt
 ICE40_PLACE_REPORT:=place_route_ice40.txt
 ICE40_ASC:=route_ice40.asc
 ICE40_BIT:=bitfile_ice40.bin
-COMPILED_FILE:=perceptron.comp
+COMPILED_FILE:=$(PROJECT_NAME).comp
 
 
 COMPILED_FILES:=$(patsubst %.v,$(COMPILE_DIR)/%.comp,$(SOURCES))
@@ -33,16 +35,18 @@ $(COMPILE_DIR)/%.comp: %.v
 ################################################################################
 # Physical implementation
 ################################################################################
+all_ice40: synthesis_ice40 place_route_ice40 bitfile_ice40
+
 synthesis_ice40: 
-	@echo "	SYNTHESIZE perceptron for iceZUM alhambra board"	
+	@echo "	SYNTHESIZE $(PROJECT_NAME) for iceZUM alhambra board"	
 	@yosys -p 'synth_ice40 -blif $(NET_DIR)/ice40.blif -top $(TOP_MODULE)' $(TOP_FILE) $(SOURCES) > $(REPORT_DIR)/$(ICE40_SYNTH_REPORT)
 
 place_route_ice40:
-	@echo "	PLACE & ROUTE perceptron for iceZUM alhambra board"
+	@echo "	PLACE & ROUTE $(PROJECT_NAME) for iceZUM alhambra board"
 	@arachne-pnr -p constraints/icezum_alhambra.pcf $(NET_DIR)/ice40.blif -o $(PLACE_ROUTE_DIR)/$(ICE40_ASC) 2> $(REPORT_DIR)/$(ICE40_PLACE_REPORT)
 
 bitfile_ice40:
-	@echo "	BITFILE of perceptron for iceZUM alhambra board"
+	@echo "	BITFILE of $(PROJECT_NAME) for iceZUM alhambra board"
 	@icepack $(PLACE_ROUTE_DIR)/$(ICE40_ASC) $(BITFILE_DIR)/$(ICE40_BIT)
 
 clean_files:
@@ -50,4 +54,3 @@ clean_files:
 	@rm -rf $(NET_DIR)/*.v $(NET_DIR)/*.blif
 	@rm -rf $(PLACE_ROUTE_DIR)/*.asc
 	@rm -rf $(BITFILE_DIR)/*.bin
-
