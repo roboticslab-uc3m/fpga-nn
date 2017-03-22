@@ -4,7 +4,8 @@
 // Function	   : UART transmit only module
 // Engineer    : Dennis Pinto Rivero danielpintoriv@gmail.com
 //
-// Notes: Sends first the least significative bit
+// Notes: Sends first the least significative bit. Data must be kept 1 cycle 
+// more after triggering start.
 //==============================================================================
 
 module uart_tx (

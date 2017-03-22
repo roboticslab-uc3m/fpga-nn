@@ -4,7 +4,8 @@
 // Function	   : UART receive and transmit module
 // Engineer    : Dennis Pinto Rivero danielpintoriv@gmail.com
 //
-// Notes: Sends (and expect to receive) the least significative bit first.
+// Notes: Sends (and expect to receive) the least significative bit first. 
+// Data_to_send must be kept 1 cycle more after triggering start.
 //==============================================================================
 
 module uart (
