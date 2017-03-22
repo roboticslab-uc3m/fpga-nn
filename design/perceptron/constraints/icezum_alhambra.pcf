@@ -11,7 +11,7 @@
 #set_io LED7 104
 
 # Buttons
-#set_io SW1 10
+set_io SW1 10
 #set_io SW2 11
 
 # I2C
@@ -31,8 +31,8 @@
 #set_io FTDI_REST 66
 
 # FTDI UART interface
-#set_io FTDI_RX 9
-#set_io FTDI_TX 8
+set_io FTDI_RX 9
+set_io FTDI_TX 8
 #set_io FTDI_RTS 7
 #set_io FTDI_CTS 4
 #set_io FTDI_DTR 3
@@ -41,32 +41,32 @@
 
 
 # System clock
-#set_io CLK12MHZ 21
+set_io CLK12MHZ 21
 
 # IO
-set_io A_IO[0] 119
-set_io A_IO[1] 118
-set_io A_IO[2] 117
-set_io A_IO[3] 116
-set_io B_IO[0] 115
-set_io B_IO[1] 114
-set_io B_IO[2] 113
-set_io B_IO[3] 112
-set_io RES_IO[0] 138
-set_io RES_IO[1] 139
-set_io RES_IO[2] 141
-set_io RES_IO[3] 142
-#set_io IO[12] 143
-#set_io IO[13] 144
+#set_io IO0 119
+#set_io IO1 118
+#set_io IO2 117
+#set_io IO3 116
+#set_io IO4 115
+#set_io IO5 114
+#set_io IO6 113
+#set_io IO7 112
+#set_io IO8 138
+#set_io IO9 139
+#set_io IO10 141
+#set_io IO11 142
+#set_io IO12 143
+#set_io IO13 144
 
 
 # DIO
-#set_io D[0] 78
-#set_io D[1] 79
-#set_io D[2] 80
-#set_io D[3] 81
-#set_io D[4] 88
-#set_io D[5] 87
+#set_io D0 78
+#set_io D1 79
+#set_io D2 80
+#set_io D3 81
+#set_io D4 88
+#set_io D5 87
 
 # Direct GPIO
 #set_io GPIO2_24 37
