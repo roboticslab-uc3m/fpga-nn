@@ -1,6 +1,6 @@
 PROJECT_NAME:=perceptron
 
-SOURCES:=perceptron_top.v perceptron.v
+SOURCES:=perceptron_top.v perceptron.v comm_controller.v
 TOP_FILE:=perceptron_iceZUM_alhambra.v
 TOP_MODULE:=$(patsubst %.v,%,$(TOP_FILE))
 
