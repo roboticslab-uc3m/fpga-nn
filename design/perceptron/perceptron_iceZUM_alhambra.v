@@ -18,11 +18,15 @@ module perceptron_iceZUM_alhambra (
 
 
 parameter clock_frequency	= 12000000;
-parameter usart_baud_rate	= 9600;
+parameter uart_baud_rate	= 9600;
+
+wire rst_n;
+
+assign rst_n = !SW1;
 
 perceptron_top #(
 	.clock_frequency(clock_frequency),
-	.uart_baud_rate(usart_baud_rate)
+	.uart_baud_rate(uart_baud_rate)
 ) perceptron_top (
 	.rst_n(rst_n),
 	.clk(CLK12MHZ),

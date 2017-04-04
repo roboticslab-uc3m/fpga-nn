@@ -71,9 +71,9 @@ reg [7:0] data_buffer[3:0];
 reg data_buffer_ld;
 
 
-wire [7:0] curr_data[5:0];
+wire [7:0] curr_data[6:0];
 
-
+assign curr_data[6] = OP_READ_RESPONSE;
 assign curr_data[5] = weight1[15:8];
 assign curr_data[4] = weight1[7:0];
 assign curr_data[3] = weight2[15:8];
@@ -208,7 +208,7 @@ always @(*) begin
 		INIT_SEND_st: begin
 			uart_clear = 1;
 			operation_ld = 1;
-			byte_cnt_val = 5;
+			byte_cnt_val = 6;
 			byte_cnt_ld = 1;
 		end
 		//WAIT_BYTE_st: 
