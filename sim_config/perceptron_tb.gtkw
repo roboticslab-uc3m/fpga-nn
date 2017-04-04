@@ -1,0 +1,43 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Wed Mar 22 15:33:42 2017
+[*]
+[dumpfile] "/home/teo/Development/fpga-nn/build/compile/testbench/dump.vcd"
+[dumpfile_mtime] "Wed Mar 22 15:25:26 2017"
+[dumpfile_size] 597037
+[savefile] "/home/teo/Development/fpga-nn/simulation/perceptron_tb.gtkw"
+[timestart] 0
+[size] 1215 1000
+[pos] -1 -1
+*-19.000000 527000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] perceptron_tb.
+[sst_width] 223
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+perceptron_tb.perceptron.clk
+perceptron_tb.perceptron.rst_n
+@22
+perceptron_tb.perceptron.IN1[15:0]
+perceptron_tb.perceptron.IN2[15:0]
+@28
+perceptron_tb.perceptron.result
+perceptron_tb.perceptron.weight1[15:0]
+perceptron_tb.perceptron.weight2[15:0]
+@24
+perceptron_tb.perceptron.weighted_in1[15:0]
+perceptron_tb.perceptron.weighted_in2[15:0]
+perceptron_tb.perceptron.weighted_sum[15:0]
+perceptron_tb.perceptron.weight1_new[15:0]
+perceptron_tb.perceptron.weight2_new[15:0]
+@28
+perceptron_tb.perceptron.weight1_ld
+perceptron_tb.perceptron.weight2_ld
+perceptron_tb.perceptron.w1_temp[32:0]
+perceptron_tb.perceptron.w2_temp[32:0]
+@22
+perceptron_tb.perceptron.in1_temp[32:0]
+perceptron_tb.perceptron.in2_temp[32:0]
+[pattern_trace] 1
+[pattern_trace] 0

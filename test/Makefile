@@ -15,6 +15,11 @@ COMPILED_FILES:=$(patsubst %.v,$(TB_COMPILE_DIR)/%.comp,$(SOURCES))
 PROJECTS_PATHS:=$(patsubst %,-y $(DESIGN_DIR)/%,$(PROJECTS))
 
 
+simulate_%: compile 
+	vvp $(TB_COMPILE_DIR)/$(subst simulate_,,$@).comp
+	mv dump.vcd $(TB_COMPILE_DIR)/$(subst simulate_,,$@).vcd
+	gtkwave -a $(SIM_DIR)/$(subst simulate_,,$@).gtkw $(TB_COMPILE_DIR)/$(subst simulate_,,$@).vcd
+
 compile: $(COMPILED_FILES)
 
 $(TB_COMPILE_DIR)/%.comp: %.v

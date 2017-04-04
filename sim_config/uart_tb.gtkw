@@ -1,0 +1,50 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Tue Apr  4 11:10:25 2017
+[*]
+[dumpfile] "/home/teo/Development/fpga-nn/build/compile/testbench/dump.vcd"
+[dumpfile_mtime] "Tue Apr  4 11:06:43 2017"
+[dumpfile_size] 683211
+[savefile] "/home/teo/Development/fpga-nn/simulation/uart_tb.gtkw"
+[timestart] 0
+[size] 1215 1000
+[pos] -1 -373
+*-29.000000 1035000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] uart_tb.
+[sst_width] 223
+[signals_width] 262
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+uart_tb.uart_1.clk
+uart_tb.uart_1.rst_n
+uart_tb.uart_1.rx
+uart_tb.uart_1.tx
+@200
+-UART_1
+@28
+uart_tb.uart_1.start_transmit
+@22
+uart_tb.uart_1.data_to_send[7:0]
+@28
+uart_tb.uart_1.new_value
+@22
+uart_tb.uart_1.recvd_data[7:0]
+@28
+uart_tb.uart_1.rx_busy
+uart_tb.uart_1.tx_busy
+@200
+-UART_2
+@28
+uart_tb.uart_2.start_transmit
+@22
+uart_tb.uart_2.data_to_send[7:0]
+@28
+uart_tb.uart_2.new_value
+@29
+uart_tb.uart_2.recvd_data[7:0]
+@28
+uart_tb.uart_2.rx_busy
+uart_tb.uart_2.tx_busy
+[pattern_trace] 1
+[pattern_trace] 0

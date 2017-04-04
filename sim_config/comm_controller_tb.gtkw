@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Mon Mar 27 17:19:52 2017
+[*]
+[dumpfile] "/home/teo/Development/fpga-nn/build/compile/testbench/dump.vcd"
+[dumpfile_mtime] "Mon Mar 27 17:03:08 2017"
+[dumpfile_size] 4531976
+[savefile] "/home/teo/Development/fpga-nn/simulation/comm_controller_tb.gtkw"
+[timestart] 4370000000
+[size] 1215 1000
+[pos] -1 -1
+*-31.000000 11480779000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] perceptron_comm_controller_tb.
+[sst_width] 223
+[signals_width] 220
+[sst_expanded] 1
+[sst_vpaned_height] 302
+@28
+perceptron_comm_controller_tb.comm_controller.rst_n
+perceptron_comm_controller_tb.comm_controller.clk
+@25
+perceptron_comm_controller_tb.comm_controller.byte[7:0]
+@28
+perceptron_comm_controller_tb.comm_controller.byte_ready
+perceptron_comm_controller_tb.comm_controller.uart_busy
+@24
+perceptron_comm_controller_tb.comm_controller.weight1[15:0]
+perceptron_comm_controller_tb.comm_controller.weight2[15:0]
+perceptron_comm_controller_tb.comm_controller.result[15:0]
+perceptron_comm_controller_tb.comm_controller.uart_byte[7:0]
+perceptron_comm_controller_tb.comm_controller.weight1_new[15:0]
+perceptron_comm_controller_tb.comm_controller.weight2_new[15:0]
+perceptron_comm_controller_tb.comm_controller.data_in1[15:0]
+perceptron_comm_controller_tb.comm_controller.data_in2[15:0]
+@28
+perceptron_comm_controller_tb.comm_controller.uart_send
+perceptron_comm_controller_tb.comm_controller.uart_clear
+perceptron_comm_controller_tb.comm_controller.weight_write
+perceptron_comm_controller_tb.comm_controller.input_write
+@24
+perceptron_comm_controller_tb.comm_controller.state[4:0]
+@28
+perceptron_comm_controller_tb.comm_controller.data_buffer_ld
+@22
+perceptron_comm_controller_tb.comm_controller.byte_cnt[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

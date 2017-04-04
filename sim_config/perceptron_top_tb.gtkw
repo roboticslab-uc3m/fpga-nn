@@ -1,0 +1,53 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Tue Apr  4 11:24:54 2017
+[*]
+[dumpfile] "/home/teo/Development/fpga-nn/build/compile/testbench/dump.vcd"
+[dumpfile_mtime] "Tue Apr  4 11:20:05 2017"
+[dumpfile_size] 1646330
+[savefile] "/home/teo/Development/fpga-nn/simulation/perceptron_top_tb.gtkw"
+[timestart] 0
+[size] 1215 1000
+[pos] -1 -1
+*-30.006830 1953527000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] perceptron_tb.
+[treeopen] perceptron_tb.uart.
+[sst_width] 223
+[signals_width] 230
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+perceptron_tb.perceptron_top.clk
+perceptron_tb.perceptron_top.rst_n
+perceptron_tb.perceptron_top.tx
+perceptron_tb.perceptron_top.rx
+@200
+-dummy UART
+@28
+perceptron_tb.uart.start_transmit
+@22
+perceptron_tb.uart.data_to_send[7:0]
+@28
+perceptron_tb.uart.new_value
+@22
+perceptron_tb.uart.recvd_data[7:0]
+@23
+perceptron_tb.uart.uart_rx.state[3:0]
+@28
+perceptron_tb.uart.uart_rx.error
+@200
+-perceptron UART
+@28
+perceptron_tb.perceptron_top.uart.start_transmit
+@24
+perceptron_tb.perceptron_top.uart.data_to_send[7:0]
+@28
+perceptron_tb.perceptron_top.uart.new_value
+@22
+perceptron_tb.perceptron_top.uart.recvd_data[7:0]
+@200
+-perceptron comm controler
+@24
+perceptron_tb.perceptron_top.comm_controller.state[4:0]
+[pattern_trace] 1
+[pattern_trace] 0

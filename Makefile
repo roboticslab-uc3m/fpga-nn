@@ -1,4 +1,4 @@
-export SIMULATION_DIR:=build/simulation
+export SIMULATION_DIR:=sim_config
 export COMPILE_DIR:=build/compile
 export DESIGN_DIR:=design
 export TESTBENCH_COMPILE_DIR:=$(COMPILE_DIR)/testbench
@@ -46,7 +46,8 @@ clean:
 compile_tests: | create_build_hierarchy
 	@$(MAKE) -C test compile
 
-simulate_all: | create_build_hierarchy
+simulate_%: 
+	@$(MAKE) -C test $@
 	
 
 create_build_hierarchy:
