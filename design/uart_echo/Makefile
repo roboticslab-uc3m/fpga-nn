@@ -13,6 +13,7 @@ COMPILE_DIR:=$(ROOT_DIR)/$(COMPILE_DIR)
 
 ICE40_SYNTH_REPORT:=synthesis_ice40.txt
 ICE40_PLACE_REPORT:=place_route_ice40.txt
+ICE40_TIME_REPORT:=time_analysis_ice40.txt
 ICE40_ASC:=route_ice40.asc
 ICE40_BIT:=bitfile_ice40.bin
 COMPILED_FILE:=$(PROJECT_NAME).comp
@@ -28,21 +29,37 @@ $(COMPILE_DIR)/%.comp: %.v
 	@echo "	COMPILE $<"
 	@iverilog $< -y . -o $@ 
 
-
 ################################################################################
 # Physical implementation
 ################################################################################
-all_ice40: synthesis_ice40 place_route_ice40 bitfile_ice40
+all_ice40: bitfile_ice40
 
 synthesis_ice40: 
 	@echo "	SYNTHESIZE $(PROJECT_NAME) for iceZUM alhambra board"	
 	@yosys -p 'synth_ice40 -blif $(NET_DIR)/ice40.blif -top $(TOP_MODULE)' $(TOP_FILE) $(SOURCES) > $(REPORT_DIR)/$(ICE40_SYNTH_REPORT)
+	@echo "Synthesis report usage:"
+	@cat $(REPORT_DIR)/$(ICE40_SYNTH_REPORT) | tail -24 | head -n 13
+	@echo "====================================================================="
+	@echo ""
 
 place_route_ice40:
 	@echo "	PLACE & ROUTE $(PROJECT_NAME) for iceZUM alhambra board"
 	@arachne-pnr -p constraints/icezum_alhambra.pcf $(NET_DIR)/ice40.blif -o $(PLACE_ROUTE_DIR)/$(ICE40_ASC) 2> $(REPORT_DIR)/$(ICE40_PLACE_REPORT)
+	@echo "Place & Route report usage:"
+	@cat $(REPORT_DIR)/$(ICE40_PLACE_REPORT) | grep "After packing:" -A 13
+	@cat $(REPORT_DIR)/$(ICE40_PLACE_REPORT) | grep "After placement:" -A 13
+	@echo "====================================================================="
+	@echo ""
 
-bitfile_ice40:
+time_analisys_ice40:
+	@echo "	TIME ANALISYS $(PROJECT_NAME) for iceZUM alhambra board"
+	@icetime -d hx1k -t -p constraints/icezum_alhambra.pcf -r $(REPORT_DIR)/$(ICE40_TIME_REPORT) $(PLACE_ROUTE_DIR)/$(ICE40_ASC) >> /dev/null
+	@echo "Time analysis:"
+	@cat $(REPORT_DIR)/$(ICE40_TIME_REPORT) | tail -3 | head -n 2
+	@echo "====================================================================="
+	@echo ""
+
+bitfile_ice40: synthesis_ice40 place_route_ice40 time_analisys_ice40
 	@echo "	BITFILE of $(PROJECT_NAME) for iceZUM alhambra board"
 	@icepack $(PLACE_ROUTE_DIR)/$(ICE40_ASC) $(BITFILE_DIR)/$(ICE40_BIT)
 
