@@ -4,7 +4,8 @@
 // Function	   : UART transmit only module
 // Engineer    : Dennis Pinto Rivero danielpintoriv@gmail.com
 //
-// Notes: Sends first the least significative bit
+// Notes: Sends first the least significative bit. Data must be kept 1 cycle 
+// more after triggering start.
 //==============================================================================
 
 module uart_tx (
@@ -27,7 +28,9 @@ localparam integer
 	WAIT_SEND_START_st 	= 3'd2,
 	INIT_SEND_BIT_st 	= 3'd3,
 	WAIT_SEND_BIT_st 	= 3'd4,
-	NEXT_BIT_st			= 3'd5;
+	NEXT_BIT_st			= 3'd5,
+	INIT_SEND_STOP_st	= 3'd6,
+	WAIT_SEND_STOP_st	= 3'd7;
 
 reg [2:0] state, next_state;
 
@@ -106,11 +109,17 @@ always @(*) begin
 				if (bit_cnt < 7) begin
 					next_state = NEXT_BIT_st;
 				end else if (bit_cnt == 7) begin
-					next_state = IDLE_st;
+					next_state = INIT_SEND_STOP_st;
 				end
 			end
 		NEXT_BIT_st:
 			next_state = INIT_SEND_BIT_st;
+		INIT_SEND_STOP_st:
+			next_state = WAIT_SEND_STOP_st;
+		WAIT_SEND_STOP_st:
+			if (sync_cnt == 0) begin
+				next_state = IDLE_st;
+			end
     endcase 
 end
 
@@ -147,6 +156,14 @@ always @(*) begin
 		end
 		WAIT_SEND_BIT_st: begin
 			tx = input_data[bit_cnt];
+			sync_cnt_en = 1;
+		end
+		INIT_SEND_STOP_st: begin
+			tx = 1;
+			sync_cnt_ld = 1;
+		end
+		WAIT_SEND_STOP_st: begin
+			tx = 1;
 			sync_cnt_en = 1;
 		end
 		NEXT_BIT_st: begin

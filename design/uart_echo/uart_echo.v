@@ -21,7 +21,7 @@ parameter  baud_rate              = 9600;
 
 //wire clear;
 //wire start_transmit;
-wire busy, error, new_value;
+wire rx_busy, tx_busy, error, new_value;
 //wire [7:0] data_to_send;
 wire [7:0] received_data;
 
@@ -35,7 +35,8 @@ uart #(
 	.tx(tx),
     .clear(new_value),
 	.start_transmit(new_value),
-    .busy(busy),
+    .rx_busy(rx_busy),
+	.tx_busy(tx_busy),
     .error(error),
     .new_value(new_value),
 	.data_to_send(received_data),

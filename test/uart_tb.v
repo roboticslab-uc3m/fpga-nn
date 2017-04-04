@@ -10,7 +10,7 @@
 
 `timescale 1ns/1ps
 
-module uart_tx_tb;
+module uart_tb;
 
 reg clk, rst_n;
 
@@ -18,13 +18,13 @@ reg clear_1;
 reg start_transmit_1;
 reg [7:0] data_to_send_1;
 wire [7:0] received_data_1;
-wire error_1, new_value_1, busy_1;
+wire error_1, new_value_1, tx_busy_1, rx_busy_1;
 
 reg clear_2;
 reg start_transmit_2;
 reg [7:0] data_to_send_2;
 wire [7:0] received_data_2;
-wire error_2, new_value_2, busy_2;
+wire error_2, new_value_2, tx_busy_2, rx_busy_2;
 
 wire interface_send_1, interface_send_2;
 
@@ -43,7 +43,8 @@ uart #(
 	.tx(interface_send_1),
     .clear(clear_1),
 	.start_transmit(start_transmit_1),
-    .busy(busy_1),
+    .rx_busy(rx_busy_1),
+	.tx_busy(tx_busy_1),
     .error(error_1),
     .new_value(new_value_1),
 	.data_to_send(data_to_send_1),
@@ -60,7 +61,8 @@ uart #(
 	.tx(interface_send_2),
     .clear(clear_2),
 	.start_transmit(start_transmit_2),
-    .busy(busy_2),
+    .rx_busy(rx_busy_2),
+	.tx_busy(tx_busy_2),
     .error(error_2),
     .new_value(new_value_2),
 	.data_to_send(data_to_send_2),
@@ -105,8 +107,8 @@ initial begin
 	start_transmit_1 = 0;
 	data_to_send_1 = 0;
 
-	wait ( !busy_1 & !busy_2);
-	repeat (100) @(negedge clk);
+	wait ( !tx_busy_1 & !rx_busy_1 & !tx_busy_2 & !rx_busy_2);
+	repeat (500) @(negedge clk);
 	$finish;
 end
 

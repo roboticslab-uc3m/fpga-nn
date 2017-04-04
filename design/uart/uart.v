@@ -19,7 +19,8 @@ module uart (
 	// Control
     input wire clear,
 	input wire start_transmit,
-    output wire busy,
+    output wire tx_busy,
+	output wire rx_busy,
     output wire error,
     output wire new_value,
 
@@ -33,10 +34,6 @@ parameter  baud_rate              = 9600;
 
 localparam clock_cycles_per_pulse = clock_frequency / baud_rate;
 
-wire rx_in_progress, tx_in_progress;
-
-assign busy = rx_in_progress | tx_in_progress;
-
 // UART receive module
 uart_rx #(
 	.clock_frequency(clock_frequency),
@@ -47,7 +44,7 @@ uart_rx #(
 	.rx(rx),
 	.clear(clear),
 	.data(recvd_data),
-	.busy(rx_in_progress),
+	.busy(rx_busy),
     .error(error),
     .new_value(new_value)
 );
@@ -62,7 +59,7 @@ uart_tx #(
 	.start(start_transmit),
 	.data(data_to_send),
 	.tx(tx),
-	.busy(tx_in_progress)
+	.busy(tx_busy)
 );
 
 endmodule
