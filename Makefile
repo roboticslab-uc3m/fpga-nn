@@ -33,11 +33,11 @@ help:
 	@echo " The available commands are:"
 	@echo "	- clean			--> Remove the build hierarchy complete"
 	@echo "	- compile_tests		--> Compile all the testbenches"
-	@echo "	- perceptron_icezum40	--> Generate the bitstream of perceptron for the iceZUM alhambra board"
-	@echo " - uart_echo_icezum40	--> Generate the bitstream of uart_echo for the iceZUM alhambra board"
-	@echo "	- clean_perceptron	--> Remove the perceptron build hierarchy"
-	@echo "	- clean_uart		--> Remove the uart build hierarchy"
-	@echo " - clean_uart_echo	--> Remove the uart_echo build hierarchy"
+	@echo "	- simulate_<test>	--> Simulate <test> and show the result on gtkwave"
+	@echo "	- <proyect>_icezum40	--> Generate the bitstream of <proyect> for the iceZUM alhambra board"
+	@echo ""
+	@echo " <test> => Any file from the test directory"
+	@echo " <proyect> => perceptron uart_echo"
 	@echo ""
 
 clean:
