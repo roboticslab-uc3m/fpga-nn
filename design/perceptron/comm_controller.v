@@ -124,7 +124,7 @@ always @(posedge clk, negedge rst_n) begin
 		data_buffer[2] <= 0;
 		data_buffer[3] <= 0;
 	end else if (data_buffer_ld) begin
-		data_buffer[byte_cnt] = byte;
+		data_buffer[byte_cnt] <= byte;
 	end
 end
 
@@ -181,7 +181,7 @@ end
 
 
 // output logic
-always @(*) begin
+always @(state, curr_data[0], curr_data[1], curr_data[2], curr_data[3], curr_data[4], curr_data[5], curr_data[6]) begin
 	byte_cnt_val = 0;
 	byte_cnt_ld = 0;
 	byte_cnt_en = 0;

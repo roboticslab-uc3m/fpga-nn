@@ -72,6 +72,9 @@ clean_simulation:
 perceptron_icezum40: | create_perceptron_hierarchy
 	@$(MAKE) -C design/perceptron all_ice40
 
+perceptron_xilinx7: | create_perceptron_hierarchy
+	@$(MAKE) -C design/perceptron all_xil7
+
 clean_perceptron:
 	@rm -rf $(PERCEPTRON_BUILD_DIR)
 

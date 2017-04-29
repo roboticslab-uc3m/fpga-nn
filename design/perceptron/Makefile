@@ -18,6 +18,13 @@ ICE40_ASC:=route_ice40.asc
 ICE40_BIT:=bitfile_ice40.bin
 COMPILED_FILE:=$(PROJECT_NAME).comp
 
+XIL7_SYNTH_REPORT:=synthesis_xil7.txt
+XIL7_PLACE_REPORT:=place_route_xil7.txt
+XIL7_TIME_REPORT:=time_analysis_xil7.txt
+XIL7_ASC:=route_xil7.asc
+XIL7_BIT:=bitfile_xil7.bin
+XIL7_COMPILED_FILE:=$(PROJECT_NAME).comp
+
 
 COMPILED_FILES:=$(patsubst %.v,$(COMPILE_DIR)/%.comp,$(SOURCES))
 
@@ -34,7 +41,7 @@ $(COMPILE_DIR)/%.comp: %.v
 	@iverilog $< -y . -o $@ 
 
 ################################################################################
-# Physical implementation
+# Physical implementation ice40
 ################################################################################
 all_ice40: bitfile_ice40
 
@@ -66,6 +73,22 @@ time_analisys_ice40:
 bitfile_ice40: synthesis_ice40 place_route_ice40 time_analisys_ice40
 	@echo "	BITFILE of $(PROJECT_NAME) for iceZUM alhambra board"
 	@icepack $(PLACE_ROUTE_DIR)/$(ICE40_ASC) $(BITFILE_DIR)/$(ICE40_BIT)
+
+
+################################################################################
+# Physical implementation Xilinx 7 series
+################################################################################
+all_xil7: synthesis_xil7
+
+synthesis_xil7: 
+	@echo "	SYNTHESIZE $(PROJECT_NAME) for xilinx 7 series fpga"	
+	@yosys -p 'synth_xilinx -top $(TOP_MODULE)' $(TOP_FILE) $(SOURCES) > $(REPORT_DIR)/$(XIL7_SYNTH_REPORT)
+	@echo "Synthesis report usage:"
+	@cat $(REPORT_DIR)/$(XIL7_SYNTH_REPORT) | tail -24 | head -n 13
+	@echo "====================================================================="
+	@echo ""
+
+
 
 clean_files:
 	@rm -rf $(REPORT_DIR)/*.txt
