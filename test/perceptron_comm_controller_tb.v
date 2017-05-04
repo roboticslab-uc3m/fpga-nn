@@ -16,7 +16,7 @@ module perceptron_comm_controller_tb;
 localparam clock_frequency	= 12000000;
 localparam clk_pulse_width = 1000000000/clock_frequency;
 
-localparam usart_baud_rate	= 9600;
+localparam uart_baud_rate	= 9600;
 
 localparam integer 
 	OP_READ 				= 5,
@@ -96,14 +96,14 @@ initial begin
 	// write weights
 	// send op (byte OP_WRITE_WEIGHTS)
 	$monitor("[Time %d]: Testing write weight operation", $time);
-	repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+	repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 	uart_byte_out = OP_WRITE_WEIGHTS;
 	uart_byte_ready = 1;
 	wait(clear);
 	uart_byte_ready = 0;
 
 	for (i = 0; i < 4; i = i+1) begin
-		repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+		repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 		uart_byte_out = 50 + i;
 		uart_byte_ready = 1;
 		wait(clear);
@@ -113,14 +113,14 @@ initial begin
 	// write inputs
 	// send op (byte OP_WRITE_INPUTS)
 	$monitor("[Time %d]: Testing write input operation", $time);
-	repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+	repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 	uart_byte_out = OP_WRITE_INPUTS;
 	uart_byte_ready = 1;
 	wait(clear);
 	uart_byte_ready = 0;
 
 	for (i = 0; i < 4; i = i+1) begin
-		repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+		repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 		uart_byte_out = 70 + i;
 		uart_byte_ready = 1;
 		wait(clear);
@@ -131,7 +131,7 @@ initial begin
 	// read values
 	// send op (byte OP_READ)
 	$monitor("[Time %d]: Testing read", $time);
-	repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+	repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 	uart_byte_out = OP_READ;
 	uart_byte_ready = 1;
 	wait(clear);
@@ -140,11 +140,11 @@ initial begin
 	for (i = 0; i < 6; i = i+1) begin
 		wait(send_byte);
 		uart_busy = 1;
-		repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+		repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 		uart_busy = 0;
 	end
 
-	repeat (8*clock_frequency/usart_baud_rate) @(negedge clk);
+	repeat (8*clock_frequency/uart_baud_rate) @(negedge clk);
 
 	$finish;
 end

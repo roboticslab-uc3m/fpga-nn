@@ -10,7 +10,7 @@
 
 `timescale 1ns/1ps
 
-module perceptron_tb;
+module perceptron_top_tb;
 
 localparam clock_frequency	= 12000000;
 localparam clk_pulse_width = 1000000000/clock_frequency;
@@ -55,7 +55,7 @@ perceptron_top perceptron_top (
 
 uart #(
 	.clock_frequency(clock_frequency),
-	.uart_baud_rate(uart_baud_rate)
+	.baud_rate(uart_baud_rate)
 ) uart (
     .rst_n(rst_n),
     .clk(clk),

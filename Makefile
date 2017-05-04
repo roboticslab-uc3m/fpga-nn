@@ -1,9 +1,28 @@
+export XILINX_TOOLS_DIR:=/opt/Xilinx/ISE/14.7/ISE_DS/ISE/bin/lin64
+
+export XST:=$(XILINX_TOOLS_DIR)/xst
+export NGDBUILD:=$(XILINX_TOOLS_DIR)/ngdbuild
+export MAP:=$(XILINX_TOOLS_DIR)/map
+export PAR:=$(XILINX_TOOLS_DIR)/par
+export BITGEN:=$(XILINX_TOOLS_DIR)/bitgen
+
 export SIMULATION_DIR:=sim_config
 export COMPILE_DIR:=build/compile
 export DESIGN_DIR:=design
 export TESTBENCH_COMPILE_DIR:=$(COMPILE_DIR)/testbench
 export BUILD_DIR:=build
 
+################################################################################
+# Xilinx design flow directory 
+# (so there are no xilinx flow files created elsewhere)
+################################################################################
+export XIL_FLOW_DIR:=build/xilinx
+export ROOT_DIR_FROM_XIL:=../..
+
+
+################################################################################
+# Project related definitions
+################################################################################
 export PERCEPTRON_BUILD_DIR:=build/perceptron
 export PERCEPTRON_REPORT_DIR:=$(PERCEPTRON_BUILD_DIR)/report
 export PERCEPTRON_BIT_DIR:=$(PERCEPTRON_BUILD_DIR)/bitfile
@@ -35,6 +54,7 @@ help:
 	@echo "	- compile_tests		--> Compile all the testbenches"
 	@echo "	- simulate_<test>	--> Simulate <test> and show the result on gtkwave"
 	@echo "	- <proyect>_icezum40	--> Generate the bitstream of <proyect> for the iceZUM alhambra board"
+	@echo "	- <proyect>_spartan3e	--> Generate the bitstream of <proyect> for the digilent nexys 2 board"
 	@echo ""
 	@echo " <test> => Any file from the test directory"
 	@echo " <proyect> => perceptron uart_echo"
@@ -55,6 +75,7 @@ create_build_hierarchy:
 	@mkdir -p $(SIMULATION_DIR)
 	@mkdir -p $(COMPILE_DIR)
 	@mkdir -p $(TESTBENCH_COMPILE_DIR)
+	@mkdir -p $(XIL_FLOW_DIR)
 
 clean_compile:
 	@rm -rf $(TESTBENCH_COMPILE_DIR)/*.comp
@@ -74,6 +95,9 @@ perceptron_icezum40: | create_perceptron_hierarchy
 
 perceptron_xilinx7: | create_perceptron_hierarchy
 	@$(MAKE) -C design/perceptron all_xil7
+
+perceptron_spartan3e: | create_perceptron_hierarchy
+	@$(MAKE) -C design/perceptron all_spartan3e
 
 clean_perceptron:
 	@rm -rf $(PERCEPTRON_BUILD_DIR)

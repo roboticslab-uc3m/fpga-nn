@@ -32,7 +32,7 @@ module comm_controller (
 
 
 parameter clock_frequency	= 12000000;
-parameter usart_baud_rate	= 9600;
+parameter uart_baud_rate	= 9600;
 
 localparam integer 
 	OP_READ 				= 5,

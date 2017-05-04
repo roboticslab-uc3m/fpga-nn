@@ -31,7 +31,7 @@ perceptron_top #(
 	.rst_n(rst_n),
 	.clk(CLK12MHZ),
 	.rx(FTDI_RX),
-	.tx(FTDI_TX),
+	.tx(FTDI_TX)
 );
 
 endmodule
