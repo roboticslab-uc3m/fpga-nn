@@ -1,8 +1,15 @@
 PROJECT_NAME:=perceptron
 
 SOURCES:=perceptron_top.v perceptron.v comm_controller.v uart.v uart_rx.v uart_tx.v
-TOP_FILE:=perceptron_iceZUM_alhambra.v
-TOP_MODULE:=$(patsubst %.v,%,$(TOP_FILE))
+
+ICE40_TOP_FILE:=perceptron_iceZUM_alhambra.v
+NEXYS2_TOP_FILE:=perceptron_nexys2.v
+
+ICE40_TOP_MODULE:=$(patsubst %.v,%,$(ICE40_TOP_FILE))
+NEXYS2_TOP_MODULE:=$(patsubst %.v,%,$(NEXYS2_TOP_FILE))
+
+ICE40_PCF:=constraints/icezum_alhambra.pcf
+NEXYS2_PCF:=constraints/Nexys2_500.ucf
 
 XIL_PRJ_FILE:=perceptron.prj
 XIL_XST_FILE:=perceptron.xst
@@ -64,7 +71,7 @@ all_ice40: bitfile_ice40
 
 synthesis_ice40: 
 	@echo "	SYNTHESIZE $(PROJECT_NAME) for iceZUM alhambra board"	
-	@yosys -p 'synth_ice40 -blif $(NET_DIR)/ice40.blif -top $(TOP_MODULE)' $(TOP_FILE) $(SOURCES) > $(REPORT_DIR)/$(ICE40_SYNTH_REPORT)
+	@yosys -p 'synth_ice40 -blif $(NET_DIR)/ice40.blif -top $(ICE40_TOP_MODULE)' $(ICE40_TOP_FILE) $(SOURCES) > $(REPORT_DIR)/$(ICE40_SYNTH_REPORT)
 	@echo "Synthesis report usage:"
 	@cat $(REPORT_DIR)/$(ICE40_SYNTH_REPORT) | tail -24 | head -n 13
 	@echo "====================================================================="
@@ -115,8 +122,8 @@ all_spartan3e: bitfile_spartan3e
 
 synthesis_spartan3e: prj_file xst_file
 	@echo "	SYNTHESIZE $(PROJECT_NAME) for Digilent Nexys2 board (Spartan 3e)"
-	@cd $(XIL_FLOW_DIR); $(XST) -ifn $(XIL_FLOW_DIR)/$(XIL_XST_FILE) -ofn $(SPARTAN3e_SYNTH_REPORT) -intstyle silent
-	@cd $(XIL_FLOW_DIR); $(NGDBUILD) $(SPARTAN3e_NGC) $(SPARTAN3e_NGD) >> /dev/null
+	@cd $(XIL_FLOW_DIR); $(XST) -ifn $(XIL_FLOW_DIR)/$(XIL_XST_FILE) -ofn $(SPARTAN3e_SYNTH_REPORT) -intstyle xflow
+	@cd $(XIL_FLOW_DIR); $(NGDBUILD) -uc $(SOURCE_DIR_FROM_XIL)/$(NEXYS2_PCF) $(SPARTAN3e_NGC) $(SPARTAN3e_NGD)
 	@cp $(XIL_FLOW_DIR)/$(SPARTAN3e_NGD) $(NET_DIR)/$(SPARTAN3e_NGD)
 	@cp $(XIL_FLOW_DIR)/$(SPARTAN3e_SYNTH_REPORT) $(REPORT_DIR)/$(SPARTAN3e_SYNTH_REPORT)
 	@echo ""
@@ -130,13 +137,13 @@ synthesis_spartan3e: prj_file xst_file
 place_route_spartan3e: synthesis_spartan3e
 	@echo "	PLACE & ROUTE $(PROJECT_NAME) for Digilent Nexys2 board (Spartan 3e)"
 	@cd $(XIL_FLOW_DIR); $(MAP) $(SPARTAN3e_NGD) -o _$(SPARTAN3e_NCD) >> /dev/null
-	@cd $(XIL_FLOW_DIR); $(PAR) -intstyle silent _$(SPARTAN3e_NCD) $(SPARTAN3e_NCD)
+	@cd $(XIL_FLOW_DIR); $(PAR) -intstyle silent _$(SPARTAN3e_NCD) $(SPARTAN3e_NCD) $(patsubst %.ncd,%.pcf,_$(SPARTAN3e_NCD))
 	@cp $(XIL_FLOW_DIR)/$(SPARTAN3e_NCD) $(NET_DIR)/$(SPARTAN3e_NCD)
 	@cp $(XIL_FLOW_DIR)/$(patsubst %.ncd,%.par,$(SPARTAN3e_NCD)) $(REPORT_DIR)/$(SPARTAN3e_PLACE_REPORT)
 
 bitfile_spartan3e: place_route_spartan3e
 	@echo "	BITFILE of $(PROJECT_NAME) for Digilent Nexys2 board (Spartan 3e)"
-	@cd $(XIL_FLOW_DIR); $(BITGEN) $(SPARTAN3e_NCD) $(SPARTAN3e_BIT) >> /dev/null
+	@cd $(XIL_FLOW_DIR); $(BITGEN) $(SPARTAN3e_NCD) $(SPARTAN3e_BIT) $(patsubst %.ncd,%.pcf,_$(SPARTAN3e_NCD)) >> /dev/null
 	@cp $(XIL_FLOW_DIR)/$(SPARTAN3e_BIT) $(BITFILE_DIR)/$(SPARTAN3e_BIT)
 
 xst_file:
@@ -145,7 +152,7 @@ xst_file:
 	@echo "run" 								  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 	@echo "-ifn $(XIL_FLOW_DIR)/$(XIL_PRJ_FILE)"  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 	@echo "-ifmt mixed" 						  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
-	@echo "-top $(TOP_MODULE)" 			          >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
+	@echo "-top $(NEXYS2_TOP_MODULE)" 	          >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 	@echo "-ofn $(SPARTAN3e_NGC)"			 	  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 	@echo "-vlgincdir $(SOURCE_DIR_FROM_XIL)"	  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 	@echo "-ofmt NGC" 							  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
@@ -154,7 +161,7 @@ xst_file:
 	@echo "-opt_level 1" 						  >> $(XIL_FLOW_DIR)/$(XIL_XST_FILE)
 
 prj_file:
-	@echo "verilog work $(TOP_FILE)" > $(XIL_FLOW_DIR)/$(XIL_PRJ_FILE)
+	@echo "verilog work $(NEXYS2_TOP_FILE)" > $(XIL_FLOW_DIR)/$(XIL_PRJ_FILE)
 	@$(foreach file, $(SOURCES), echo "verilog work $(file)" >> $(XIL_FLOW_DIR)/$(XIL_PRJ_FILE);)
 
 
