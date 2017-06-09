@@ -11,6 +11,8 @@ module uart_echo (
     input wire rst_n,
     input wire clk,
 	
+    output reg [7:0] byte_cnt,
+    output wire error,
 	// External interface
     input wire rx,
 	output wire tx
@@ -21,7 +23,7 @@ parameter  baud_rate              = 9600;
 
 //wire clear;
 //wire start_transmit;
-wire rx_busy, tx_busy, error, new_value;
+wire rx_busy, tx_busy, new_value;
 //wire [7:0] data_to_send;
 wire [7:0] received_data;
 
@@ -42,5 +44,15 @@ uart #(
 	.data_to_send(received_data),
     .recvd_data(received_data)
 );
+
+
+// received bytes counter
+always @(posedge clk, negedge rst_n) begin
+    if (!rst_n) begin
+        byte_cnt <= 0;
+    end else if (new_value) begin
+        byte_cnt <= byte_cnt + 1;
+    end
+end
 
 endmodule

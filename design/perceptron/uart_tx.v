@@ -167,6 +167,7 @@ always @(*) begin
 			sync_cnt_en = 1;
 		end
 		NEXT_BIT_st: begin
+            tx = input_data[bit_cnt];
 			bit_cnt_en = 1;
 		end
     endcase 
