@@ -14,6 +14,8 @@ module perceptron_top (
     input wire rst_n,
     input wire clk,
 	
+    output wire [4:0] cont_state,
+    
     input wire rx,
 	output wire tx
 );
@@ -116,6 +118,7 @@ comm_controller comm_controller (
 	.weight2_new(cont_weight2_new),
 	.data_in1(cont_IN1_new),
 	.data_in2(cont_IN2_new),
+    .controller_state(cont_state),
 	.uart_send(uart_transmit),
 	.uart_clear(uart_clear),
 	.weight_write(neur_weight_ld),

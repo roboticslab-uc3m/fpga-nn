@@ -37,6 +37,7 @@ reg clk, rst_n;
 
 // perceptron interface
 wire perceptron_rx, perceptron_tx;
+wire [4:0] cont_state;
 
 // uart interface
 reg uart_clear;
@@ -57,6 +58,7 @@ perceptron_top #(
     ) perceptron_top (
     .rst_n(rst_n),
     .clk(clk),
+    .cont_state(cont_state),
     .rx(perceptron_rx),
 	.tx(perceptron_tx)
 );

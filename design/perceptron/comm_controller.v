@@ -24,6 +24,7 @@ module comm_controller (
 	output wire [15:0] weight2_new,
 	output wire [15:0] data_in1,
 	output wire [15:0] data_in2,
+    output wire [4:0] controller_state,
 	output reg uart_send,
 	output reg uart_clear,
 	output reg weight_write,
@@ -72,6 +73,8 @@ module comm_controller (
 
 
     wire [7:0] curr_data[6:0];
+
+    assign controller_state = state; 
 
     assign curr_data[6] = OP_READ_RESPONSE;
     assign curr_data[5] = weight1[15:8];
