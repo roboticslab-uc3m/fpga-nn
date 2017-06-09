@@ -10,7 +10,10 @@
 
 `timescale 1ns/1ps
 
-module perceptron_top_tb;
+module perceptron_top_8b_tb;
+
+localparam fp_integer_width = 4;
+localparam fp_fract_width = 4;
 
 localparam clock_frequency	= 12000000;
 localparam clk_pulse_width = 1000000000/clock_frequency;
@@ -46,7 +49,12 @@ reg [7:0] packet_inputs [0:4];
 reg [7:0] packet_weights [0:4];
 reg [7:0] packet_readings [0:6];
 
-perceptron_top perceptron_top (
+perceptron_top #(
+    .fp_integer_width(fp_integer_width),
+    .fp_fract_width(fp_fract_width),
+	.clock_frequency(clock_frequency),
+	.uart_baud_rate(uart_baud_rate)
+    ) perceptron_top (
     .rst_n(rst_n),
     .clk(clk),
     .rx(perceptron_rx),
@@ -131,10 +139,10 @@ initial begin
 	// Write weights
 	////////////////////////////////////////////////////////////////////////////
 	packet_weights[0] = OP_WRITE_WEIGHTS;
-	packet_weights[1] =	8'b00010101;	
-	packet_weights[2] =	8'b10101010;
-	packet_weights[3] =	8'b11111100;
-	packet_weights[4] =	8'b00110011;
+	packet_weights[1] =	8'b00000000;	//
+	packet_weights[2] =	8'b00010110;    // 1.375
+	packet_weights[3] =	8'b00000000;    //
+	packet_weights[4] =	8'b11000000;    // -4
 
 	for (i = 0; i < 5 ; i = i+1) begin
 		uart_data_to_send = packet_weights[i];
@@ -182,10 +190,10 @@ initial begin
 	// Write Inputs
 	////////////////////////////////////////////////////////////////////////////
 	packet_inputs[0] = OP_WRITE_INPUTS;
-	packet_inputs[1] =	8'b11100000;	
-	packet_inputs[2] =	8'b00000000;
-	packet_inputs[3] =	8'b00100000;
-	packet_inputs[4] =	8'b00001111;
+	packet_inputs[1] =	8'b00000000;
+	packet_inputs[2] =	8'b11100000;    // -2
+	packet_inputs[3] =	8'b00000000;
+	packet_inputs[4] =	8'b00000100;    // 0.25
 
 	for (i = 0; i < 5 ; i = i+1) begin
 		uart_data_to_send = packet_inputs[i];
@@ -227,10 +235,14 @@ initial begin
 	`assert(packet_readings[3] != packet_weights[3] || packet_readings[4] != packet_weights[4], "Weight 2 not correct")
 	`assert(packet_readings[5] != 0 || packet_readings[6] != 0, "Result not correct")
 
+    // The perceptron value should be (8') = -3.75
+    // result is evaluated after the step function [step(q) = (q >= 0)]
+    // result = 0
+
 	$display(" - Value check OK");
 
 	$display(" - All test CORRECT");
 	$finish;
 end
 
-endmodule // perceptron_tb
+endmodule // perceptron_top_8b_tb

@@ -1,5 +1,5 @@
 # Source files and projects must be specified here
-SOURCES:=perceptron_top_tb.v perceptron_comm_controller_tb.v uart_echo_tb.v uart_tb.v uart_tx_tb.v uart_rx_tb.v perceptron_tb.v
+SOURCES:=perceptron_top_16b_tb.v perceptron_top_8b_tb.v perceptron_comm_controller_tb.v uart_echo_tb.v uart_tb.v uart_tx_tb.v uart_rx_tb.v perceptron_tb.v
 PROJECTS:=uart_echo uart perceptron
 
 ROOT_DIR:=..
