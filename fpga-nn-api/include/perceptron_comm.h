@@ -28,28 +28,29 @@
 
 #include "fixed_point.h"
 
-#define WRITE_WEIGHTS   (100)
-#define WRITE_INPUTS    (90)
+#define WRITE_WEIGHTS   (50)
+#define WRITE_INPUTS    (51)
 #define READ            (5)
-#define READ_RESPONSE   (6)
+#define READ_RESPONSE   (100)
 #define WRITE_OK        (101)
 #define WRITE_ERROR     (102)
+#define CONNECT_ERROR   (110)
 
-#define FILE_NAME "./device"
-
-typedef char byte;
+#define FILE_NAME "/dev/ttyUSB1"
 
 typedef struct {
-    byte operation;
-    fixed weight1;
-    fixed weight2;
-    fixed input1;
-    fixed input2;
-    fixed result; 
+    uint8_t operation;
+    fixed16 weight1;
+    fixed16 weight2;
+    fixed16 input1;
+    fixed16 input2;
+    fixed16 result; 
 } perceptron_package_t;
 
 
 int write_weights(perceptron_package_t *weights);
+int write_inputs(perceptron_package_t *p);
+int read_perceptron(perceptron_package_t *p);
 
 
 #endif  /* __PERCEPTRON_COMM_H */

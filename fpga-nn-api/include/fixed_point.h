@@ -24,17 +24,19 @@
  ******************************************************************************/
 
 #include <limits.h>
+#include <stdint.h>
 
-// Definition of a fixed point number with 16 bit procession
-#if USHRT_MAX == 65535
-    typedef short int fixed;
-#else
-    #error "Does not know how to make 16b fixed point in the current platform"
-#endif
+// Definition of a signed fixed point number with 16 bit procession
+    typedef int16_t fixed16;
+    typedef uint16_t ufixed16;
+
+// Definition of a signed fixed point number with 8 bit procession
+    typedef int8_t fixed8;
+    typedef uint8_t ufixed8;
 
 // Macros to convert between double and fixed
 // num is the number to convert and n_frac is the number of bits of the
 // fractional part in the fixed point format.
-#define float_to_fixed(num, n_frac)    ((fixed)(num * pow(2, n_frac)))
+#define float_to_fixed(num, n_frac)    ((fixed16)(num * pow(2, n_frac)))
 
 #define fixed_to_float(num, n_frac)    ((double)num / pow(2, n_frac))
