@@ -10,20 +10,26 @@
 module perceptron (
 	input wire rst_n,
 	input wire clk,
-	input wire [15:0] IN1,
-	input wire [15:0] IN2,
-	input wire [15:0] weight1_new,
-	input wire [15:0] weight2_new,
+	input wire signed [fp_width-1:0] IN1,
+	input wire signed [fp_width-1:0] IN2,
+	input wire signed [fp_width-1:0] weight1_new,
+	input wire signed [fp_width-1:0] weight2_new,
 	input wire weight1_ld,
 	input wire weight2_ld,
-	output reg [15:0] weight1,
-	output reg [15:0] weight2,
+	output reg signed [fp_width-1:0] weight1,
+	output reg signed [fp_width-1:0] weight2,
 	output wire result
 );
 
-	wire [15:0] weighted_in1;	// intermediate wires for calculations
-	wire [15:0] weighted_in2;
-	wire [15:0] weighted_sum;
+    parameter fp_integer_width = 4;
+    parameter fp_fract_width = 12;
+
+    localparam fp_width = fp_integer_width + fp_fract_width;
+
+    // intermediate wires for calculations
+	wire signed [fp_width*2-1:0] weighted_in1;
+	wire signed [fp_width*2-1:0] weighted_in2;
+	wire signed [fp_width-1:0] weighted_sum;
 
 	// weight registers
 	always @(posedge clk, negedge rst_n) begin
@@ -45,12 +51,16 @@ module perceptron (
 	// part is the sum of the number of deciman bits of the operands, in this 
 	// case, 12+12=24. As the result register only has 12 decimal bits, it
 	// has to be truncated to maintain the 16MSBs
-	assign weighted_in1 = ( {{16{IN1[15]}}, IN1} * {{16{weight1[15]}}, weight1} ) >> 12;
-	assign weighted_in2 = ( {{16{IN2[15]}}, IN2} * {{16{weight2[15]}}, weight2} ) >> 12;
+	//assign weighted_in1 = ( {{(fp_integer_width+fp_fract_width){IN1[fp_integer_width+fp_fract_width-1]}}, IN1} * {{(fp_integer_width+fp_fract_width){weight1[fp_integer_width+fp_fract_width-1]}}, weight1} ) >> fp_fract_width;
+	//assign weighted_in2 = ( {{(fp_integer_width+fp_fract_width){IN2[fp_integer_width+fp_fract_width-1]}}, IN2} * {{(fp_integer_width+fp_fract_width){weight2[fp_integer_width+fp_fract_width-1]}}, weight2} ) >> fp_fract_width;
 
-	assign weighted_sum = weighted_in1 + weighted_in2;
+	assign weighted_in1 = (IN1 * weight1 ) >> fp_fract_width;
+	assign weighted_in2 = (IN2 * weight2 ) >> fp_fract_width;
+
+
+	assign weighted_sum = (weighted_in1[fp_width-1:0]) + (weighted_in2[fp_width-1:0]);
 
 	// threshold activation function
-	assign result = !weighted_sum[15];
+	assign result = !weighted_sum[fp_width-1];
 
 endmodule
