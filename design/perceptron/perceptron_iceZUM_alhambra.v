@@ -16,15 +16,19 @@ module perceptron_iceZUM_alhambra (
 	output wire FTDI_TX		// UART rx line
 );
 
+localparam fp_integer_width = 4;
+localparam fp_fract_width = 4;
 
-parameter clock_frequency	= 12000000;
-parameter uart_baud_rate	= 9600;
+localparam clock_frequency	= 12000000;
+localparam uart_baud_rate	= 9600;
 
 wire rst_n;
 
 assign rst_n = !SW1;
 
 perceptron_top #(
+    .fp_integer_width(fp_integer_width),
+    .fp_fract_width(fp_fract_width),
 	.clock_frequency(clock_frequency),
 	.uart_baud_rate(uart_baud_rate)
 ) perceptron_top (
