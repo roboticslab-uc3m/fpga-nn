@@ -18,7 +18,7 @@ module perceptron (
 	input wire weight2_ld,
 	output reg signed [fp_width-1:0] weight1,
 	output reg signed [fp_width-1:0] weight2,
-	output wire result
+	output wire [fp_width-1:0] result
 );
 
     parameter fp_integer_width = 4;
@@ -61,6 +61,8 @@ module perceptron (
 	assign weighted_sum = (weighted_in1[fp_width-1:0]) + (weighted_in2[fp_width-1:0]);
 
 	// threshold activation function
-	assign result = !weighted_sum[fp_width-1];
+	//assign result = !weighted_sum[fp_width-1];
+    
+    assign result = weighted_sum;
 
 endmodule

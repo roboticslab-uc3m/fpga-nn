@@ -24,7 +24,7 @@ reg [15:0] neur_IN1, neur_IN2;
 reg [15:0] neur_weight1_new, neur_weight2_new;
 reg neur_weight1_ld, neur_weight2_ld;
 wire [15:0] neur_weight1_curr, neur_weight2_curr;
-wire neur_result;
+wire [15:0] neur_result;
 
 perceptron perceptron (
 	.rst_n(rst_n),

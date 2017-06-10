@@ -25,6 +25,7 @@
 
 #include <limits.h>
 #include <stdint.h>
+#include <math.h>
 
 // Definition of a signed fixed point number with 16 bit procession
     typedef int16_t fixed16;
@@ -37,6 +38,7 @@
 // Macros to convert between double and fixed
 // num is the number to convert and n_frac is the number of bits of the
 // fractional part in the fixed point format.
-#define float_to_fixed(num, n_frac)    ((fixed16)(num * pow(2, n_frac)))
+#define float_to_fixed(num, n_frac)    ((fixed16)((num) * pow(2, (n_frac))))
 
-#define fixed_to_float(num, n_frac)    ((double)num / pow(2, n_frac))
+#define fixed_to_float(num, n_frac, n)    ( (double)((fixed16)(num << 16-n ) >> (16-n)) / pow(2, n_frac))
+

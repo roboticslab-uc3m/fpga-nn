@@ -25,8 +25,8 @@ module perceptron_iceZUM_alhambra (
 	output wire FTDI_TX		// UART rx line
 );
 
-localparam fp_integer_width = 4;
-localparam fp_fract_width = 4;
+localparam fp_integer_width = 2;
+localparam fp_fract_width = 10;
 
 localparam clock_frequency	= 12000000;
 localparam uart_baud_rate	= 9600;

@@ -27,6 +27,7 @@
 #define __PERCEPTRON_COMM_H
 
 #include "fixed_point.h"
+#include <stdio.h>
 
 #define WRITE_WEIGHTS   (50)
 #define WRITE_INPUTS    (51)
@@ -36,7 +37,6 @@
 #define WRITE_ERROR     (102)
 #define CONNECT_ERROR   (110)
 
-#define FILE_NAME "/dev/ttyUSB1"
 
 typedef struct {
     uint8_t operation;
@@ -48,9 +48,9 @@ typedef struct {
 } perceptron_package_t;
 
 
-int write_weights(perceptron_package_t *weights);
-int write_inputs(perceptron_package_t *p);
-int read_perceptron(perceptron_package_t *p);
+int write_weights(perceptron_package_t *weights, FILE *fp);
+int write_inputs(perceptron_package_t *p, FILE *fp);
+int read_perceptron(perceptron_package_t *p, FILE *fp);
 
 
 #endif  /* __PERCEPTRON_COMM_H */

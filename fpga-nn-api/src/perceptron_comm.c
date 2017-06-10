@@ -29,16 +29,10 @@
 #include <stdlib.h>
 #include "fixed_point.h"
 
-int write_weights(perceptron_package_t *p) {
-    FILE *fp;
+int write_weights(perceptron_package_t *p, FILE *fp) {
     uint8_t response = 0;
     uint8_t package[5];
-    
-    // open file
-    fp = fopen(FILE_NAME, "a+");
-    if (fp == NULL)
-        return CONNECT_ERROR;
-    
+
     p->operation = WRITE_WEIGHTS;
     
     // write data
@@ -56,22 +50,13 @@ int write_weights(perceptron_package_t *p) {
     fread(&response, sizeof(uint8_t), 1, fp);
     //response = WRITE_OK;
     
-    // close file
-    fclose(fp);
-    
     return response;
 }
 
 
-int write_inputs(perceptron_package_t *p) {
-    FILE *fp;
+int write_inputs(perceptron_package_t *p, FILE *fp) {
     uint8_t response;
     uint8_t package[5];
-    
-    // open file
-    fp = fopen(FILE_NAME, "a+");
-    if (fp == NULL)
-        return CONNECT_ERROR;
     
     p->operation = WRITE_INPUTS;
     
@@ -92,21 +77,12 @@ int write_inputs(perceptron_package_t *p) {
     fread(&response, sizeof(uint8_t), 1, fp);
     //response = WRITE_OK;
     
-    // close file
-    fclose(fp);
-    
     return response;
 }
 
-int read_perceptron(perceptron_package_t *p) {
-    FILE *fp;
+int read_perceptron(perceptron_package_t *p, FILE *fp) {
     uint8_t response;
     uint8_t package[7];
-    
-    // Open file
-    fp = fopen(FILE_NAME, "a+");
-    if (fp == NULL)
-        return CONNECT_ERROR;
     
     p->operation = READ;
     
@@ -130,21 +106,13 @@ int read_perceptron(perceptron_package_t *p) {
     ((uint8_t*)(&p->result))[1]  = package[5];
     ((uint8_t*)(&p->result))[0]  = package[6];
     
-    //p->operation = package[0];
-    //p->weight1 = ((fixed16)(package[1]&0xf) << 8) || (fixed16)package[2];
-    //p->weight2 = ((fixed16)(package[3]&0xf) << 8) || (fixed16)package[4];
-    //p->result  = ((fixed16)(package[5]&0xf) << 8) || (fixed16)package[6];
-    
-    printf("\n - (%x)", package[0]);
-    printf("\n - (%x)", package[1]);
-    printf("\n - (%x)", package[2]);
-    printf("\n - (%x)", package[3]);
-    printf("\n - (%x)", package[4]);
-    printf("\n - (%x)", package[5]);
-    printf("\n - (%x)", package[6]);
-    
-    // close file
-    fclose(fp);
+    //printf("\n - (%x)", package[0]);
+    //printf("\n - (%x)", package[1]);
+    //printf("\n - (%x)", package[2]);
+    //printf("\n - (%x)", package[3]);
+    //printf("\n - (%x)", package[4]);
+    //printf("\n - (%x)", package[5]);
+    //printf("\n - (%x)", package[6]);
     
     return p->operation;
 }

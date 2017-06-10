@@ -42,6 +42,7 @@ wire [fp_width-1:0] neur_weight1_new, neur_weight2_new;
 wire neur_weight1_ld, neur_weight2_ld;
 wire neur_weight_ld;
 wire [fp_width-1:0] neur_weight1_curr, neur_weight2_curr;
+wire [fp_width-1:0] neur_result;
 
 // Communication controller interface
 wire [15:0] cont_IN1, cont_IN2_int;
@@ -67,18 +68,16 @@ perceptron #(
     ) perceptron (
 	.rst_n(rst_n),
 	.clk(clk),
-	.IN1(neur_IN1[fp_width-1:0]),
-	.IN2(neur_IN2[fp_width-1:0]),
-	.weight1_new(neur_weight1_new[fp_width-1:0]),
-	.weight2_new(neur_weight2_new[fp_width-1:0]),
+	.IN1(neur_IN1),
+	.IN2(neur_IN2),
+	.weight1_new(neur_weight1_new),
+	.weight2_new(neur_weight2_new),
 	.weight1_ld(neur_weight1_ld),
 	.weight2_ld(neur_weight2_ld),
-	.weight1(neur_weight1_curr[fp_width-1:0]),
-	.weight2(neur_weight2_curr[fp_width-1:0]),
-	.result(cont_result[0])
+	.weight1(neur_weight1_curr),
+	.weight2(neur_weight2_curr),
+    .result(neur_result)
 );
-
-assign cont_result[15:1] = 0;
 
 uart #(
 	.clock_frequency(clock_frequency),
@@ -101,6 +100,7 @@ uart #(
 
 assign cont_weight1_curr = {{(16-fp_width){1'b0}}, neur_weight1_curr};
 assign cont_weight2_curr = {{(16-fp_width){1'b0}}, neur_weight2_curr};
+assign cont_result = {{(16-fp_width){1'b0}}, neur_result};
 
 comm_controller comm_controller (
     .rst_n(rst_n),

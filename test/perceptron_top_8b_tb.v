@@ -130,7 +130,7 @@ initial begin
 	`assert(packet_readings[0] != OP_READ_RESPONSE, "Operation CODE not correct")
 	`assert(packet_readings[1] != 0 || packet_readings[2] != 0, "Weight 1 not correct")
 	`assert(packet_readings[3] != 0 || packet_readings[4] != 0, "Weight 2 not correct")
-	`assert(packet_readings[5] != 0 || packet_readings[6] != 1, "Result not correct")
+	`assert(packet_readings[5] != 0 || packet_readings[6] != 8'h10, "Result not correct")
  
 	$display(" - Value check OK");
 
@@ -184,7 +184,7 @@ initial begin
 	`assert(packet_readings[0] != OP_READ_RESPONSE, "Operation CODE not correct")
 	`assert(packet_readings[1] != packet_weights[1] || packet_readings[2] != packet_weights[2], "Weight 1 not correct")
 	`assert(packet_readings[3] != packet_weights[3] || packet_readings[4] != packet_weights[4], "Weight 2 not correct")
-	`assert(packet_readings[5] != 0 || packet_readings[6] != 1, "Result not correct")
+	`assert(packet_readings[5] != 0 || packet_readings[6] != 8'h10, "Result not correct")
 
 	$display(" - Value check OK");
 
